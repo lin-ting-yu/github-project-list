@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
-        console.log(6546546546545);
         this.initialiseInvites();
       }
     });
@@ -74,6 +73,7 @@ export class HomeComponent implements OnInit {
       },
       error: error => {
         console.log(error);
+        this.handleLimit(error);
       }
     });
     return ;
@@ -97,6 +97,7 @@ export class HomeComponent implements OnInit {
       },
       error: error => {
         console.log(error);
+        this.handleLimit(error);
       },
       complete: () => {
         console.log(this.reposData);
@@ -120,6 +121,7 @@ export class HomeComponent implements OnInit {
         error: error => {
           this.setMessage(`No ${this.userName} This User`);
           console.log(error);
+          this.handleLimit(error);
         },
         complete: () => {}
       });
@@ -168,6 +170,13 @@ export class HomeComponent implements OnInit {
   setMessage(text: string) {
     this.showMessage = true;
     this.message = text;
+  }
+  handleLimit(error) {
+    let limitText = 'API rate limit exceeded';
+    if (error.error.message.indexOf(limitText) === 0){
+      this.setMessage(limitText);
+    }
+    return true;
   }
   onBottom(){
     if (!this.final && !this.stopLoading) {
