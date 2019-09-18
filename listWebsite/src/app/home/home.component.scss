@@ -6,6 +6,28 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  .github{
+    display: block;
+    width: 120px;
+    height: 30px;
+    font-weight: bold;
+    font-size: $f-z-1-5;
+    letter-spacing: 1px;
+    color: #fff;
+    background-color: $color-cis-grey-8;
+    border-radius: 0px 0px 20px 20px;
+    position: fixed;
+    top: 0;
+    right: 20px;
+    z-index: $z-index-top;
+    .link-content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
   .form-content{
     width: 100%;
     max-width: 700px;
