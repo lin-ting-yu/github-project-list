@@ -7,7 +7,6 @@ import { AnimationFrameService } from '../../_service/animation-frame.service';
   styleUrls: ['./infinite-scroll.component.scss']
 })
 export class InfiniteScrollComponent implements OnInit {
-  @Input() minScrollAdd = 200;
   @Input() stop = false;
   @Output() onBottom = new EventEmitter();
   @ViewChildren('infoScroll') infoScroll: QueryList<ElementRef>;
@@ -23,12 +22,14 @@ export class InfiniteScrollComponent implements OnInit {
     this.windowHeight = window.innerHeight;
     this.windowWidth  = window.innerWidth;
   }
+  // 滑動到底實觸發
   onBottomEvent() {
     const infoScrollDOMPos = this.infoScrollDOM.getBoundingClientRect();
     const result = this.windowHeight - infoScrollDOMPos.bottom;
     if (result <= 0) { return; }
     this.onBottom.emit();
   }
+  // 取得定位DOM
   getinfoScrollDOM() {
     this.infoScrollDOM = this.infoScroll.toArray()[0].nativeElement;
   }

@@ -15,17 +15,28 @@ import { AnimationFrameService } from '../_service/animation-frame.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  // 搜尋框
   @ViewChildren(InputComponent) input: QueryList<ElementRef>;
   private inputDOM = null;
   public userName: '';
+  // listCardData
   public reposData: Array<ListCard> = [];
+  // 計算抓到第幾個
   private start = 0;
+  // 所有的repo
   private repos = [];
+  // 控制是否停止infs事件
   public stopLoading = true;
+  // 判斷是否都取到資料
   private httpComplete = [];
+  // 判斷是否結束
   public final = false;
+  // 顯示訊息
   public showMessage = false;
+  // 訊息文字
   public message = '';
+
+
   private navigationSubscription;
   constructor(
     private http: HttpClientService,
@@ -33,27 +44,19 @@ export class HomeComponent implements OnInit {
     private routerService: RouterEventService,
     private anFrame: AnimationFrameService
   ) {
+    // 控制重新賦予參數實頁面reset
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
         this.initialiseInvites();
       }
     });
   }
-
-  // public getxxx(url: string): Promise<any> {
-  //   return this.http.get(url).toPromise();
-  // }
-
-  // public async aaa() {
-  //   const test = await this.getxxx("http://sss");
-  //   console.log(test);
-  // }
+  // 獲取參數
   private setUserName() {
     let name = this.routerService.getQueryParamse('name');
     this.userName = name ? name.trim() : '';
   }
-
+  // httpClient fn
   private getContributors(url: string, index) {
     this.http.get(url).subscribe({
       next: val => {
@@ -126,9 +129,12 @@ export class HomeComponent implements OnInit {
         complete: () => {}
       });
   }
+  // httpClient fn :end
+  // 判斷是否都取到資料
   private checkHttpComplete() {
     return this.httpComplete.every(bool => bool);
   }
+  // 生成data
   private createListCard(start: number, length: number) {
     for (let i = start; i < start + length; i++) {
       let repo = this.repos[i];
@@ -145,6 +151,7 @@ export class HomeComponent implements OnInit {
       this.setMessage(`No More`);
     }
   }
+  // 抓取完成
   private onLoaded(){
     if (!this.final) {
       this.stopLoading = false;
@@ -163,6 +170,7 @@ export class HomeComponent implements OnInit {
       this.createListCard(this.start, 3);
     }
   }
+  // 設定訊息相關
   resetMessage() {
     this.showMessage = false;
     this.message = '';
@@ -178,6 +186,9 @@ export class HomeComponent implements OnInit {
     }
     return true;
   }
+  // 設定訊息相關 : end
+
+  // 事件相關
   onBottom(){
     if (!this.final && !this.stopLoading) {
       console.log('bottom');
@@ -197,6 +208,9 @@ export class HomeComponent implements OnInit {
   onClick() {
     this.onSubmit(this.inputDOM);
   }
+  // 事件相關 : end
+
+  // 初始設定相關
   reset() {
     this.resetMessage();
     this.repos.length = 0;
@@ -205,7 +219,6 @@ export class HomeComponent implements OnInit {
     this.final = false;
     this.stopLoading = true;
     this.start = 0;
-
   }
   initialiseInvites() {
     console.log('init');
@@ -224,6 +237,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  // 初始設定相關 : end
   ngOnInit() {
   }
   ngAfterViewInit(): void {
