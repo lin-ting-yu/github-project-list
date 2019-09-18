@@ -1,0 +1,13 @@
+.layout-content{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 80px 20px;
+  .layout-row{
+    width: 100%;
+    max-width: 1200px;
+    .layout-col{
+      width: 100%;
+    }
+  }
+}

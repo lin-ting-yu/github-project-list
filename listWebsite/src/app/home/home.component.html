@@ -1,0 +1,30 @@
+
+<app-layout>
+  <app-infinite-scroll (onBottom)="onBottom()" [stop]="stopLoading">
+    <div class="home-content">
+      <div class="form-content">
+        <app-form>
+          <app-form-row>
+            <app-form-col class="col-pc-10 col-pad-b-12">
+              <app-input [type]="'name'" [placeholder]="'name'" [value]="userName" (onKeydownEnter)="onSubmit($event)"></app-input>
+            </app-form-col>
+            <app-form-col class="col-pc-2 col-pad-b-12">
+              <div class="btn-content">
+                <app-button-content>
+                  <app-button [text]="'search'" (onClick)="onClick()"></app-button>
+                </app-button-content>
+              </div>
+            </app-form-col>
+          </app-form-row>
+        </app-form>
+      </div>
+      <div class="list-content">
+        <app-list-card [data]="reposData"></app-list-card>
+      </div>
+      <div class="message" *ngIf="showMessage">
+        <span class="text">{{message}}</span>
+      </div>
+    </div>
+  </app-infinite-scroll>
+</app-layout>
+

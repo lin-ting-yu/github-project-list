@@ -1,0 +1,12 @@
+.infinite-scroll-content{
+  width: 100%;
+  .info-body{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    // border: solid 1px;
+    .info-content{
+      width: 100%;
+    }
+  }
+}

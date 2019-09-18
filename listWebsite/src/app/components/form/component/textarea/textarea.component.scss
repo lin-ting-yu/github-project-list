@@ -1,0 +1,23 @@
+@import "variables";
+@import "mixins";
+
+.form-textarea{
+  @include form-base-style();
+  .textarea-content{
+    position: relative;
+    .textarea{
+      width: 100%;
+      height: $select-input-pc-h * 3;
+      padding: 10px 7px;
+      line-height: 40px;
+      resize : none;
+      background-color: transparent;
+      background: linear-gradient(transparent calc(100% - 1px), #ddd 0);
+      background-size: calc(100% - 10px) 40px;
+      background-repeat-x: no-repeat;
+      background-position: 50% 0;
+      position: relative;
+      overflow: hidden;
+    }
+  }
+}

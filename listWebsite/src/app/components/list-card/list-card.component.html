@@ -1,0 +1,101 @@
+<div class="list-card-content">
+  <ul class="list-card-ul">
+    <li class="list-card-li" *ngFor="let repositorie of data">
+      <div class="card-li-info" *ngIf="repositorie">
+        <div class="card-content">
+          <div class="tab-list">
+            <ul class="tab-ul">
+              <li class="tab-li">
+                <span class="icon">
+                  <img src="assets/img/star.svg" alt="" class="img">
+                </span>
+                <span class="text">Star: {{repositorie.star}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="first-content">
+            <h2 class="title-content">
+              <span class="text">{{repositorie.title}}</span>
+            </h2>
+            <div class="text-content">
+              <span class="text">{{repositorie.text || 'No description, website, or topics provided.'}}</span>
+            </div>
+          </div>
+          <div class="info-content">
+            <div class="info-list">
+              <ul class="info-ul">
+                <li class="info-li full">
+                  <h3 class="title-content">
+                    <span class="text">url</span>
+                  </h3>
+                  <div class="text-content">
+                    <span class="text">{{repositorie.url}}</span>
+                    <span class="copy" (click)="copyLink(repositorie.url)">copy</span>
+                  </div>
+                </li>
+                <li class="info-li full">
+                  <h3 class="title-content">
+                    <span class="text">contributors</span>
+                  </h3>
+                  <ng-container
+                    *ngIf="repositorie.contributors && repositorie.contributors.length > 0; then tabContent; else textContent"
+                  ></ng-container>
+                  <ng-template #tabContent>
+                    <div class="tab-content">
+                      <ul class="tab-ul">
+                        <li class="tab-li" *ngFor="let contributor of repositorie.contributors">
+                          <a [href]="contributor.url" target="_blank" class="link-content">
+                            <span class="text">{{contributor.name}}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </ng-template>
+                  <ng-template #textContent>
+                    <div class="text-content">
+                      <span class="text">No Other Contributors</span>
+                    </div>
+                  </ng-template>
+                </li>
+                <li class="info-li">
+                  <h3 class="title-content">
+                    <span class="text">created</span>
+                  </h3>
+                  <div class="text-content big">
+                    <span class="text">{{transsformDate(repositorie.created)}}</span>
+                  </div>
+                </li>
+                <li class="info-li">
+                  <h3 class="title-content">
+                    <span class="text">updated</span>
+                  </h3>
+                  <div class="text-content big">
+                    <span class="text">{{transsformDate(repositorie.updated)}}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="btn-content">
+            <a [href]="repositorie.url" target="_blank" class="link-content">
+              <span class="text">more</span>
+              <span class="icon">
+                <img src="assets/img/arrow.svg" alt="" class="img">
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div
+    class="copy-modal"
+    [ngClass]="{
+      'show': copyModalShow,
+      'animation': copyModalAn
+    }"
+  >
+    <span class="icon"><img src="assets/img/checked.svg" alt="" class="img"></span>
+    <span class="text">Copy</span>
+  </div>
+</div>

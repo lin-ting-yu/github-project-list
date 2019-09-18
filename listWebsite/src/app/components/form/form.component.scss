@@ -1,0 +1,47 @@
+@import "variables";
+
+.form-content{
+  position: relative;
+  margin-bottom: $form-col-bottom-gap * -1;
+  .form-body{
+    width: calc(100% + #{$form-col-col-gap});
+    margin-left: $form-col-col-gap / -2;
+    ::ng-deep{
+      $form-col-length: 12;
+      $form-window-name:
+        pc, pad-p, pad-b, pad-s, m, m-s;
+      $form-window-size:
+        $screen-size-w-pc,
+        $screen-size-w-pad-p,
+        $screen-size-w-pad-b,
+        $screen-size-w-pad-s,
+        $screen-size-w-mobile,
+        $screen-size-w-mobile-s;
+
+      @for $i from 1 to length($form-window-name)+1{
+        $key-nome: nth($form-window-name, $i);
+        $form-col-name: col-;
+
+        @if($i > 1){
+          @media screen and (max-width: nth($form-window-size, $i)){
+            @for $j from 1 to $form-col-length+1 {
+                .#{$form-col-name}#{$key-nome}-#{$j}{
+                  min-width: 100% * ($j / $form-col-length);
+                  max-width: 100% * ($j / $form-col-length);
+                }
+            }
+          }
+        }
+        @else{
+          @for $j from 1 to $form-col-length+1 {
+              .#{$form-col-name}#{$key-nome}-#{$j}{
+                min-width: 100% * ($j / $form-col-length);
+                max-width: 100% * ($j / $form-col-length);
+              }
+          }
+        }
+
+      }
+    }
+  }
+}
