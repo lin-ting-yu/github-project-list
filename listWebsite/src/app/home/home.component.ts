@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
   }
   // 獲取參數
   private setUserName() {
-    let name = this.routerService.getQueryParamse('name');
+    const name = this.routerService.getQueryParamse('name');
     this.userName = name ? name.trim() : '';
   }
   // httpClient fn
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
                   return {
                     name: user.login,
                     url: user.html_url
-                  }
+                  };
                 });
         this.reposData[index].contributors = contributors;
         this.httpComplete[index] = true;
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
   private getRepoDetail(url: string, index) {
     return this.http.get(url).subscribe({
       next: res => {
-        let dataObj = res.body;
+        const dataObj = res.body;
         const result: ListCard = {
           user: this.userName,
           title: dataObj.name,
@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit {
   // 生成data
   private createListCard(start: number, length: number) {
     for (let i = start; i < start + length; i++) {
-      let repo = this.repos[i];
+      const repo = this.repos[i];
       if (!repo) {
         this.final = true;
         this.stopLoading = true;
@@ -148,16 +148,19 @@ export class HomeComponent implements OnInit {
       this.getRepoDetail(repo.url, i);
     }
     if (this.final) {
-      this.setMessage(`No More`);
+      setTimeout(() => {
+        this.setMessage(`No More`);
+      }, 300);
     }
   }
   // 抓取完成
-  private onLoaded(){
+  private onLoaded() {
+
     if (!this.final) {
       this.stopLoading = false;
     }
   }
-  private onLoading(){
+  private onLoading() {
     console.log('in-Loading');
     if (!this.final) {
       console.log('on-Loading');
@@ -180,8 +183,8 @@ export class HomeComponent implements OnInit {
     this.message = text;
   }
   handleLimit(error) {
-    let limitText = 'API rate limit exceeded';
-    if (error.error.message.indexOf(limitText) === 0){
+    const limitText = 'API rate limit exceeded';
+    if (error.error.message.indexOf(limitText) === 0) {
       this.setMessage(limitText);
     }
     return true;
@@ -189,7 +192,7 @@ export class HomeComponent implements OnInit {
   // 設定訊息相關 : end
 
   // 事件相關
-  onBottom(){
+  onBottom() {
     if (!this.final && !this.stopLoading) {
       console.log('bottom');
       this.stopLoading = true;
@@ -197,13 +200,13 @@ export class HomeComponent implements OnInit {
     }
   }
   onSubmit(event) {
-    console.log(event)
+    console.log(event);
     let name = event.value;
     name = name === undefined ? '' : name.trim();
-    if (name === '') {
+    if (name === '' || name === this.userName) {
       return;
     }
-    this.routerService.linkClick('home',{name});
+    this.routerService.linkClick('home', {name});
   }
   onClick() {
     this.onSubmit(this.inputDOM);
@@ -240,12 +243,14 @@ export class HomeComponent implements OnInit {
   // 初始設定相關 : end
   ngOnInit() {
   }
+  // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit(): void {
     this.inputDOM = this.input.toArray()[0];
     setTimeout(() => {
       this.anFrame.startAniamtionFrame();
     }, 0);
   }
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
     // don't then we will continue to run our initialiseInvites()
